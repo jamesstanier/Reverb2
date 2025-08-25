@@ -28,7 +28,6 @@ public class StreamAudio implements Runnable {
 	private static int BUFFER_SIZE = 4096;
 	private int frameSize;
 	private int sampleRate;
-	private int bitsPerSample;
 	private int channels;
 	public ProcessAudio processAudio;
 	public boolean bLoop = false;
@@ -41,9 +40,7 @@ public class StreamAudio implements Runnable {
 	
 	private void setup(String fileName) throws UnsupportedAudioFileException, IOException {
 		
-		//f = new File("C:\\Users\\jstan\\Documents\\3D-Sound\\Audio Files\\typical-trap-loop-2b-130751.wav");
 		f = new File(fileName);
-		//File f = new File("C:\\Users\\jstan\\Documents\\3D-Sound\\Audio Files\\summer-night-piano-solo-6885.wav");
 		fOut = new File("output.wav");
 		fos = new FileOutputStream(fOut);
 		bos = new BufferedOutputStream(fos);
@@ -54,7 +51,7 @@ public class StreamAudio implements Runnable {
 	    
 	    frameSize = format.getFrameSize();
 	    sampleRate = (int)format.getSampleRate();
-	    bitsPerSample = format.getSampleSizeInBits();
+	    format.getSampleSizeInBits();
 	    channels = format.getChannels();
 
         out.writeBytes("RIFF");// 0-4 ChunkId always RIFF
@@ -129,11 +126,9 @@ public class StreamAudio implements Runnable {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		try {
 			playAudio();
 		} catch (LineUnavailableException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

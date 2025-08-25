@@ -6,7 +6,6 @@ public class ProcessAudio {
 	private AllPassFilter allPassFilter1, allPassFilter2;
 	private int channels;
 	private int sampleRate;
-	private int frameSize;
 	private int bufferSize;
 	public float delayRD1, delayRD2, delayRD3, delayRD4;
 	public float delayVD1, delayVD2, delayVD3, delayVD4;
@@ -17,7 +16,6 @@ public class ProcessAudio {
 		
 		channels = channelsIn;
 		sampleRate = sampleRateIn;
-		frameSize = sampleRateIn;
 		bufferSize = bufferSizeIn;
 		
 		combFilterR1 = new CombFilter(channels, sampleRate, bufferSize, 2000.0f);
