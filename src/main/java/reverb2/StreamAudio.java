@@ -1,3 +1,5 @@
+package reverb2;
+
 import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -13,7 +15,6 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
-
 
 public class StreamAudio implements Runnable {
 
@@ -83,7 +84,6 @@ public class StreamAudio implements Runnable {
 
         int numRead = 0;
         byte[] buf = new byte[line.getBufferSize()];
-        byte[] bufTemp = new byte[line.getBufferSize()];
         double[][] doubleArray = new double[channels][buf.length / frameSize];
         while (true) {
 	        while ((numRead = stream.read(buf, 0, buf.length)) >= 0) {

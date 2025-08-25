@@ -1,3 +1,5 @@
+package reverb2;
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -21,8 +23,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-
-public class Frame {
+public class App {
 	
 	private JFrame Reverb2;
 	private StreamAudio audio;
@@ -41,7 +42,7 @@ public class Frame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Frame window = new Frame();
+					App window = new App();
 					window.Reverb2.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,13 +52,13 @@ public class Frame {
 
 	}
 	
-	public Frame() {
+	public App() {
 		setup();
 	}
 	
 	private void setup() {
 		Reverb2 = new JFrame();
-		Reverb2.setTitle("Reverberator");
+		Reverb2.setTitle("Reverb2");
 		Reverb2.setBounds(100, 100, 800, 500);
 		Reverb2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Reverb2.getContentPane().setLayout(null);
