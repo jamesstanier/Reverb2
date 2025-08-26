@@ -16,7 +16,7 @@ This approach was loosely inspired by ideas discussed in [Coding a Basic Reverb 
   Unlike most reverbs that rely only on longer delays for spaciousness, Reverb2 leverages *short micro-delays* to improve presence and timbral detail. This makes the reverb usable as both a spatial effect *and* a subtle enhancer.
 
 - **Configurable delay lines**  
-  Tune both long (RD) and short (VD) delay values, and feedback amounts.
+  Tune both long (RD) and short (VD) delay values, and feedback (gain) amounts.
 
 - **Written in Java**  
   Portable across platforms, with no native dependencies.
@@ -54,7 +54,7 @@ This project is **dual-licensed**:
   You are free to use, modify, and distribute under the terms of the GNU General Public License version 3.  
 - **Commercial license**  
   For closed-source or proprietary applications, a commercial license is available.  
-  Please contact **<your email or website>** for details.
+  Please contact **j.stanier766@gmail.com** for details.
 
 ### Third-Party Code
 
@@ -75,7 +75,8 @@ If you’d like to propose improvements or bug fixes, please open an issue or pu
 
 ## 📣 Roadmap
 
-- More parameter presets
+- Volume control
+- Accept additional audio formats (other than just .wav)
 - Better GUI
 - VST Plugin
 - Use JUCE framework
