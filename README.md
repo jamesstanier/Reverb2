@@ -38,9 +38,11 @@ git clone https://github.com/jamesstanier/Reverb2.git
 cd Reverb2
 
 # Build with Maven Wrapper (Linux/macOS)
+./mvnw -q clean compile
 ./mvnw exec:java -Dexec.mainClass=reverb2.App
 
 # or on Windows
+.\mvnw.cmd -q clean compile
 mvnw.cmd --% exec:java -Dexec.mainClass=reverb2.App
 ```
 
@@ -61,7 +63,7 @@ This project is **dual-licensed**:
 This project includes code adapted from:
 
 - [Reverberator](https://github.com/the-seekers-project/Reverberator)  
-  Copyright (c) Rishi K.  
+  Copyright (c) Rishi D.  
   Licensed under the [Apache License, Version 2.0](LICENSE-APACHE).
 
 See the [NOTICE](NOTICE) file for details of modifications and attribution requirements.
