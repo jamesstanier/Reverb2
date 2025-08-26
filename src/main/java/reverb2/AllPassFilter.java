@@ -13,25 +13,25 @@ public class AllPassFilter {
 	private double[][] mainBuffer;
 
 	public AllPassFilter(int channelsIn, int sampleRateIn, int bufferSizeIn, float delayBufferSizeInMs) {
-		
+
 		channels = channelsIn;
 		sampleRate = sampleRateIn;
 		bufferSize = bufferSizeIn;
 		delayBufferSize = (int)(delayBufferSizeInMs * sampleRate / 1000.0f);
-		
+
 		delayBuffer = new double[channels][delayBufferSize];
 		midBuffer = new double[channels][bufferSize];
 		mainBuffer = new double[channels][bufferSize];
 	}
-	
+
 	public double[][] allPassFilter(double[][] inputBuffer, float delayInMs, float gain) {
-		
+
 		//Attenuate input
 		mainBuffer = attenauteAndCopy(inputBuffer, 0.7f);
-		
+
 		int delayInSamples = (int)(delayInMs * sampleRate / 1000.0f);
 		double gainSquared = Math.pow(gain, 2);
-		
+
 		for (int j = 0; j < inputBuffer[0].length; j++) { //data
 			//Calculate read position
 			readPosition = (writePosition - delayInSamples + delayBufferSize) % delayBufferSize;
@@ -43,16 +43,16 @@ public class AllPassFilter {
 				//Add delay buffer to input buffer at delayed position
 				mainBuffer[i][j] += delayBuffer[i][readPosition] * gain;
 				//Copy input buffer back to delay buffer
-				delayBuffer[i][writePosition] = mainBuffer[i][j];				
+				delayBuffer[i][writePosition] = mainBuffer[i][j];
 			}
 			writePosition++;
 			writePosition %= delayBufferSize;
 		}
 		return midBuffer;
 	}
-	
+
 	private double[][] attenauteAndCopy(double[][] buffer, float gain) {
-		
+
 		for (int i = 0; i < buffer.length; i++) { //channels
 			for (int j = 0; j < buffer[0].length; j++) { //data
 				mainBuffer[i][j] = buffer[i][j] * gain;

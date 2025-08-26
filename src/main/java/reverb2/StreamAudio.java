@@ -33,23 +33,23 @@ public class StreamAudio implements Runnable {
 	public ProcessAudio processAudio;
 	public boolean bLoop = false;
 	public boolean bStop = false;
-	
-	
+
+
 	public StreamAudio(String fileName) throws UnsupportedAudioFileException, IOException {
 		setup(fileName);
 	}
-	
+
 	private void setup(String fileName) throws UnsupportedAudioFileException, IOException {
-		
+
 		f = new File(fileName);
 		fOut = new File("output.wav");
 		fos = new FileOutputStream(fOut);
 		bos = new BufferedOutputStream(fos);
 		out = new DataOutputStream(bos);
-				
+
 	    stream = AudioSystem.getAudioInputStream(f);
 	    format = stream.getFormat();
-	    
+
 	    frameSize = format.getFrameSize();
 	    sampleRate = (int)format.getSampleRate();
 	    format.getSampleSizeInBits();
@@ -68,13 +68,13 @@ public class StreamAudio implements Runnable {
         out.writeShort(Short.reverseBytes((short)format.getSampleSizeInBits()));// 35-36 Bits-Per-Sample
         out.writeBytes("data");// 37-40 Subchunk2 ID always data
         out.writeInt(Integer.reverseBytes((int)(5 * stream.getFrameLength() * format.getFrameSize())));// 41-44 Subchunk 2 Size audio-length
-        
+
 		processAudio = new ProcessAudio(channels, sampleRate, frameSize, BUFFER_SIZE / frameSize);
 
 	}
-	
+
 	public void playAudio() throws LineUnavailableException, IOException {
-		
+
         SourceDataLine.Info info = new DataLine.Info(SourceDataLine.class, stream
 	            .getFormat(), ((int) stream.getFrameLength() * format.getFrameSize()));
         SourceDataLine line = (SourceDataLine) AudioSystem.getLine(info);
@@ -89,33 +89,40 @@ public class StreamAudio implements Runnable {
 	        while ((numRead = stream.read(buf, 0, buf.length)) >= 0) {
 	        	//Convert from byte to double array
 	        	doubleArray = toDoubleArray(buf, frameSize, channels);
-	        	
+
 	        	//Process Audio
 	        	doubleArray = processAudio.processData(doubleArray);
-	        	
+
 	        	//Convert back from double to byte array
 	        	buf = toByteArray(doubleArray, frameSize, channels);
-	        	
+
 	        	int offset = 0;
 	        	while (offset < numRead) {
 	        		offset += line.write(buf, offset, numRead - offset);
 	        	}
 	        	out.write(buf);
-	        	
-	        	if (bStop) break;
+
+	        	if (bStop) {
+					break;
+				}
 	        }
-	    	if (bLoop) stream.reset();
-	    	else break;
-	    	if (bStop) break;
+	    	if (bLoop) {
+				stream.reset();
+			} else {
+				break;
+			}
+	    	if (bStop) {
+				break;
+			}
         }
-        
+
         line.drain();
         line.stop();
         out.flush();
         out.close();
 
 	}
-	
+
 	public void start () {
 		System.out.println("Starting audio thread...");
 		if (t == null) {
@@ -132,26 +139,26 @@ public class StreamAudio implements Runnable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private byte[] toByte(double value) {
 	    byte[] bytes = new byte[2];
 	    ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).putShort((short)value);
 	    return bytes;
-	
+
 	}
-	
+
 	private double toDouble(byte[] value) {
-		return (double)ByteBuffer.wrap(value).order(ByteOrder.LITTLE_ENDIAN).getShort();
+		return ByteBuffer.wrap(value).order(ByteOrder.LITTLE_ENDIAN).getShort();
 	}
-	
+
 	private byte[] toByteArray(double[][] array, int frameSize, int channel) {
 		byte[] byteArray = new byte[array[0].length * frameSize];
 		byte[] bytes = new byte[frameSize / channel];
 		int index = 0;
-		
+
 		for (int j = 0; j < array[0].length; j++) {
-			for (int i = 0; i < array.length; i++) {
-				bytes = toByte(array[i][j]);
+			for (double[] element : array) {
+				bytes = toByte(element[j]);
 				for (int k = 0; k < frameSize / channel; k++) {
 					byteArray[index++] = bytes[k];
 				}
@@ -159,19 +166,19 @@ public class StreamAudio implements Runnable {
 		}
 		return byteArray;
 	}
-	
+
 	private double[][] toDoubleArray(byte[] array, int frameSize, int channel) {
 		double[][] doubleArray = new double[channel][array.length / frameSize];
 		byte[] bytes = new byte[frameSize / channel];
 		int index = 0;
-		
+
 		for (int j = 0; j < doubleArray[0].length; j++) { //data
 			for (int i = 0; i < doubleArray.length; i++) { //channel
 				for (int k = 0; k < frameSize / channel; k++) {
 					bytes[k] = array[index++];
 				}
 				doubleArray[i][j] = toDouble(bytes);
-			}	
+			}
 		}
 		return doubleArray;
 	}
