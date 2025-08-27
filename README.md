@@ -17,6 +17,9 @@ This approach was loosely inspired by ideas discussed in [Coding a Basic Reverb 
 
 - **Configurable delay lines**  
   Tune both long (RD) and short (VD) delay values, and feedback (gain) amounts.
+  
+- **Automatically saves output**  
+  Saves the output to an 'output.wav' file for later playback.
 
 - **Written in Java**  
   Portable across platforms, with no native dependencies.
@@ -45,6 +48,7 @@ cd Reverb2
 .\mvnw.cmd -q clean compile
 mvnw.cmd --% exec:java -Dexec.mainClass=reverb2.App
 ```
+Or just double-click the 'Reverb2-0.0.1.jar' file (after downloading) to get it running.
 
 ---
 
@@ -56,7 +60,7 @@ This project is **dual-licensed**:
   You are free to use, modify, and distribute under the terms of the GNU General Public License version 3.  
 - **Commercial license**  
   For closed-source or proprietary applications, a commercial license is available.  
-  Please contact **j.stanier766@gmail.com** for details.
+  Please [contact me](mailto:j.stanier766@gmail.com) for details.
 
 ### Third-Party Code
 
