@@ -5,6 +5,8 @@ it enhances the perceived sound quality not only through the traditional longer 
 
 This approach was loosely inspired by ideas discussed in [Coding a Basic Reverb Algorithm](https://medium.com/the-seekers-project/coding-a-basic-reverb-algorithm-an-introduction-to-audio-programming-d5d90ad58bde), but extends them with an original design that goes beyond conventional Schroeder reverbs.
 
+Demo available on [YouTube](https://youtu.be/DtkGs41flzY).
+
 ---
 
 ## ✨ Key Features
