@@ -62,7 +62,7 @@ This project is **dual-licensed**:
   You are free to use, modify, and distribute under the terms of the GNU General Public License version 3.  
 - **Commercial license**  
   For closed-source or proprietary applications, a commercial license is available.  
-  Please [contact me](mailto:j.stanier766@gmail.com) for details.
+  Please contact me: j.stanier766(at)gmail.com for details.
 
 ### Third-Party Code
 
